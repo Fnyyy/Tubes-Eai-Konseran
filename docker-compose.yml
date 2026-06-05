@@ -1,0 +1,157 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    ports:
+      - "${RABBITMQ_PORT:-5672}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-guest}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  ticketing-service:
+    build: ./services/ticketing
+    ports:
+      - "${TICKETING_PORT:-8001}:8000"
+    environment:
+      MONGODB_URL: mongodb://ticketing-mongo:27017
+      MONGODB_DB: ticketing
+      RABBITMQ_URL: amqp://${RABBITMQ_DEFAULT_USER:-guest}:${RABBITMQ_DEFAULT_PASS:-guest}@rabbitmq:5672/
+      EXCHANGE_NAME: concert.events
+      ORDER_CREATED_ROUTING_KEY: ticket.order.created
+    depends_on:
+      rabbitmq:
+        condition: service_started
+      ticketing-mongo:
+        condition: service_healthy
+
+  ticketing-mongo:
+    image: mongo:7
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - ticketing_mongo_data:/data/db
+
+  venue-service:
+    build: ./services/venue
+    ports:
+      - "${VENUE_PORT:-8002}:8000"
+    environment:
+      MONGODB_URL: mongodb://venue-mongo:27017
+      MONGODB_DB: venue
+    depends_on:
+      venue-mongo:
+        condition: service_healthy
+
+  venue-mongo:
+    image: mongo:7
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - venue_mongo_data:/data/db
+
+  artist-service:
+    build: ./services/artist
+    ports:
+      - "${ARTIST_PORT:-8003}:8000"
+    environment:
+      MONGODB_URL: mongodb://artist-mongo:27017
+      MONGODB_DB: artist
+    depends_on:
+      artist-mongo:
+        condition: service_healthy
+
+  artist-mongo:
+    image: mongo:7
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - artist_mongo_data:/data/db
+
+  payment-service:
+    build: ./services/payment
+    ports:
+      - "${PAYMENT_PORT:-8004}:8000"
+    environment:
+      MONGODB_URL: mongodb://payment-mongo:27017
+      MONGODB_DB: payment
+    depends_on:
+      payment-mongo:
+        condition: service_healthy
+
+  payment-mongo:
+    image: mongo:7
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - payment_mongo_data:/data/db
+
+  notification-service:
+    build: ./services/notification
+    ports:
+      - "${NOTIFICATION_PORT:-8005}:8000"
+    environment:
+      MONGODB_URL: mongodb://notification-mongo:27017
+      MONGODB_DB: notification
+      RABBITMQ_URL: amqp://${RABBITMQ_DEFAULT_USER:-guest}:${RABBITMQ_DEFAULT_PASS:-guest}@rabbitmq:5672/
+      EXCHANGE_NAME: concert.events
+      NOTIFICATION_QUEUE: notification.participant
+      NOTIFICATION_ROUTING_KEY: notification.participant.created
+      DLX_NAME: concert.events.dlx
+    depends_on:
+      rabbitmq:
+        condition: service_started
+      notification-mongo:
+        condition: service_healthy
+
+  notification-mongo:
+    image: mongo:7
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - notification_mongo_data:/data/db
+
+  integration-worker:
+    build: ./integration-worker
+    environment:
+      RABBITMQ_URL: amqp://${RABBITMQ_DEFAULT_USER:-guest}:${RABBITMQ_DEFAULT_PASS:-guest}@rabbitmq:5672/
+      EXCHANGE_NAME: concert.events
+      DLX_NAME: concert.events.dlx
+      ORDER_QUEUE: integration.ticket-order
+      ORDER_CREATED_ROUTING_KEY: ticket.order.created
+      NOTIFICATION_ROUTING_KEY: notification.participant.created
+      VENUE_URL: http://venue-service:8000
+      ARTIST_URL: http://artist-service:8000
+      PAYMENT_URL: http://payment-service:8000
+      TICKETING_URL: http://ticketing-service:8000
+      MAX_RETRIES: 3
+    depends_on:
+      - rabbitmq
+      - ticketing-service
+      - venue-service
+      - artist-service
+      - payment-service
+
+volumes:
+  rabbitmq_data:
+  ticketing_mongo_data:
+  venue_mongo_data:
+  artist_mongo_data:
+  payment_mongo_data:
+  notification_mongo_data:
