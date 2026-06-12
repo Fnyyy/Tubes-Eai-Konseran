@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konseran — Concert Management Platform</title>
+  <meta name="description" content="Konseran adalah platform end-to-end terintegrasi untuk pengelolaan konser. Manajemen artis, ticketing, venue, payment, dan notifikasi dalam satu platform.">
+  <meta name="keywords" content="concert management, ticketing, artist lineup, event venue, payment gateway">
+  <meta name="author" content="Konseran">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎸</text></svg>">
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div id="page-loader">
+    <div class="loader-content">
+      <div class="loader-logo">Konseran</div>
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+  <!-- ═══════════════ NAVIGATION ═══════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#hero" class="nav-logo">
+        <div class="nav-logo-icon">K</div>
+        <div class="nav-logo-text">Kon<span>seran</span></div>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#hero" class="active" data-nav>Beranda</a>
+        <a href="#about" data-nav>Fitur</a>
+        <a href="#artists" data-nav>Lineup</a>
+        <a href="#venue" data-nav>Venue</a>
+        <a href="#orders" data-nav>Pesanan</a>
+        <a href="#booking" class="nav-cta" data-nav>Beli Tiket</a>
+      </div>
+      <div class="nav-mobile-toggle" id="navToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO SECTION ═══════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-image"></div>
+      <div class="hero-bg-pattern"></div>
+      <div class="hero-particles" id="heroParticles"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Concert Management Platform
+        </div>
+        <h1 class="hero-title">
+          <span class="line">Kelola Konser</span>
+          <span class="line"><span class="highlight">Lebih Mudah</span></span>
+          <span class="line">Dalam Satu Platform</span>
+        </h1>
+        <p class="hero-subtitle">
+          Sistem manajemen konser terintegrasi. Dari pemesanan artis, penjualan tiket, kapasitas venue, hingga notifikasi pengunjung.
+        </p>
+        <div class="hero-actions">
+          <a href="#artists" class="btn btn-primary">
+            <span class="btn-icon">🎸</span>
+            Lihat Lineup
+          </a>
+          <a href="#booking" class="btn btn-outline">
+            Beli Tiket
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+          <div class="hero-stat-value" data-count="5">0</div>
+          <div class="hero-stat-label">Microservices Terintegrasi</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value" id="stat-artists" data-count="3">0</div>
+          <div class="hero-stat-label">Artis</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value" id="stat-capacity" data-count="580">0</div>
+          <div class="hero-stat-label">Total Tiket</div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-mouse"></div>
+      <span class="scroll-text">Scroll Down</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ABOUT / FEATURES ═══════════════ -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-tag">Mengapa Konseran</div>
+        <h2 class="section-title">Pengalaman Event <span class="highlight">Terbaik</span></h2>
+        <p class="section-subtitle">Kami menghadirkan standar tertinggi dalam setiap aspek penyelenggaraan acara Anda</p>
+      </div>
+      <div class="about-grid">
+        <div class="feature-card animate-on-scroll delay-1">
+          <div class="feature-icon">🎤</div>
+          <h3 class="feature-title">Artist Service</h3>
+          <p class="feature-desc">Sistem manajemen lineup artis, penjadwalan panggung, dan durasi tampil yang terpusat.</p>
+        </div>
+        <div class="feature-card animate-on-scroll delay-2">
+          <div class="feature-icon">🎟️</div>
+          <h3 class="feature-title">Ticketing Service</h3>
+          <p class="feature-desc">Pembuatan pesanan tiket secara realtime dengan sistem kategori (VIP, Regular) yang terintegrasi.</p>
+        </div>
+        <div class="feature-card animate-on-scroll delay-3">
+          <div class="feature-icon">💳</div>
+          <h3 class="feature-title">Payment Service</h3>
+          <p class="feature-desc">Gateway pembayaran multi-metode (E-Wallet, Card, Bank) untuk transaksi pembelian tiket yang aman.</p>
+        </div>
+        <div class="feature-card animate-on-scroll delay-1">
+          <div class="feature-icon">🏟️</div>
+          <h3 class="feature-title">Venue Service</h3>
+          <p class="feature-desc">Manajemen kapasitas venue konser untuk mencegah overcapacity pada setiap kategori tiket.</p>
+        </div>
+        <div class="feature-card animate-on-scroll delay-2">
+          <div class="feature-icon">🔔</div>
+          <h3 class="feature-title">Notification Service</h3>
+          <p class="feature-desc">Sistem push notification otomatis ke pengunjung saat pesanan tiket berhasil dibuat atau dibayar.</p>
+        </div>
+        <div class="feature-card animate-on-scroll delay-3">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Event-Driven Architecture</h3>
+          <p class="feature-desc">Menggunakan RabbitMQ dan Integration Worker untuk pemrosesan asinkron antar layanan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-diamond"></div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- ═══════════════ VENUES SECTION ═══════════════ -->
+  <!-- ═══════════════ ARTISTS SECTION ═══════════════ -->
+  <section class="section" id="artists">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-tag">Lineup Artis</div>
+        <h2 class="section-title">Konser <span class="highlight">Mendatang</span></h2>
+        <p class="section-subtitle">Daftar artis yang akan tampil di konser "concert-2026-jkt" (diambil dari Artist Service)</p>
+      </div>
+      <div class="venues-grid" id="artistsGrid">
+        <!-- Artists loaded dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ VENUE CAPACITY SECTION ═══════════════ -->
+  <section class="section" id="venue" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-tag">Kapasitas Venue</div>
+        <h2 class="section-title">Status <span class="highlight">Tiket</span> Realtime</h2>
+        <p class="section-subtitle">Pantau ketersediaan tiket dan kapasitas venue secara langsung (diambil dari Venue Service)</p>
+      </div>
+      <div class="services-showcase" id="capacityGrid">
+        <!-- Capacity loaded dynamically -->
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ═══════════════ BOOKING SECTION ═══════════════ -->
+  <section class="section" id="booking">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-tag">Beli Tiket</div>
+        <h2 class="section-title">Pesan Tiket <span class="highlight">Konser</span> Anda</h2>
+        <p class="section-subtitle">Pilih kategori tiket dan selesaikan pembayaran untuk mengamankan tempat Anda</p>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-info animate-on-scroll delay-1">
+          <h3 class="contact-info-title">Detail Konser</h3>
+          <p class="contact-info-desc">Pesan tiket sekarang sebelum kehabisan. Notifikasi akan dikirimkan otomatis setelah pembayaran berhasil.</p>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">📅</div>
+            <div>
+              <div class="contact-detail-label">Konser</div>
+              <div class="contact-detail-value">concert-2026-jkt</div>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">🎫</div>
+            <div>
+              <div class="contact-detail-label">Harga Tiket</div>
+              <div class="contact-detail-value">REGULAR: Rp 750.000<br>VIP: Rp 1.500.000</div>
+            </div>
+          </div>
+        </div>
+        <div class="booking-form animate-on-scroll delay-2">
+          <h3 class="form-title">Form Pemesanan</h3>
+          <p class="form-subtitle">Data pemesan (Terhubung ke Ticketing & Payment Service)</p>
+          <form id="bookingForm">
+            <input type="hidden" id="bookingConcertId" value="concert-2026-jkt">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bookingName">Nama Lengkap</label>
+                <input class="form-input" type="text" id="bookingName" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bookingEmail">Email</label>
+                <input class="form-input" type="email" id="bookingEmail" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bookingType">Tipe Tiket</label>
+                <select class="form-select" id="bookingType" required onchange="calculateTotal()">
+                  <option value="REGULAR">REGULAR - Rp 750.000</option>
+                  <option value="VIP">VIP - Rp 1.500.000</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bookingQty">Jumlah</label>
+                <input class="form-input" type="number" id="bookingQty" min="1" max="10" value="1" required onchange="calculateTotal()">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bookingPayment">Metode Pembayaran</label>
+                <select class="form-select" id="bookingPayment" required>
+                  <option value="EWALLET">E-Wallet</option>
+                  <option value="CARD">Kartu Kredit/Debit</option>
+                  <option value="BANK_TRANSFER">Bank Transfer</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total Pembayaran</label>
+              <h3 style="color: var(--color-gold-primary); margin-top: 5px;" id="bookingTotalDisplay">Rp 750.000</h3>
+            </div>
+            <button type="submit" class="btn btn-primary form-submit" id="submitBooking">
+              <span class="btn-icon">💳</span>
+              Bayar Sekarang
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ORDERS SECTION ═══════════════ -->
+  <section class="section" id="orders" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-tag">Status Pesanan</div>
+        <h2 class="section-title">Pesanan <span class="highlight">Terakhir</span></h2>
+        <p class="section-subtitle">Daftar pesanan tiket dan status pembayarannya (Realtime dari Ticketing Service)</p>
+      </div>
+      <div class="services-showcase" id="ordersGrid" style="grid-template-columns: repeat(1, 1fr); max-width: 800px; margin: 0 auto;">
+        <!-- Orders loaded dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#hero" class="nav-logo" style="margin-bottom: 16px; display: inline-flex;">
+            <div class="nav-logo-icon">K</div>
+            <div class="nav-logo-text">Kon<span>seran</span></div>
+          </a>
+          <p class="footer-brand-desc">Konseran adalah platform end-to-end terintegrasi untuk pengelolaan konser. Manajemen artis, ticketing, venue, payment, dan notifikasi dalam satu platform.</p>
+        </div>
+        <div>
+          <h4 class="footer-heading">Navigasi</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Beranda</a></li>
+            <li><a href="#about">Fitur</a></li>
+            <li><a href="#artists">Lineup Artis</a></li>
+            <li><a href="#venue">Kapasitas Venue</a></li>
+            <li><a href="#orders">Status Pesanan</a></li>
+            <li><a href="#contact">Booking</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-heading">Layanan</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Catering & Kuliner</a></li>
+            <li><a href="#services">Dekorasi & Styling</a></li>
+            <li><a href="#services">Entertainment</a></li>
+            <li><a href="#services">Dokumentasi</a></li>
+            <li><a href="#services">Event Planning</a></li>
+            <li><a href="#services">Transportasi</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-heading">Venue Populer</h4>
+          <ul class="footer-links">
+            <li><a href="#venues">Grand Ballroom</a></li>
+            <li><a href="#venues">Garden Pavilion</a></li>
+            <li><a href="#venues">Conference Hall</a></li>
+            <li><a href="#venues">Rooftop Terrace</a></li>
+            <li><a href="#venues">Heritage Hall</a></li>
+            <li><a href="#venues">Lakeside Venue</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-bottom-text">&copy; 2026 Konseran. All rights reserved.</div>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ VENUE DETAIL MODAL ═══════════════ -->
+  <div class="modal-overlay" id="venueModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalVenueName">Venue Name</h3>
+        <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Modal content loaded dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
